@@ -1,0 +1,120 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/jetbrains-mono';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-border: var(--border);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+}
+
+:root {
+  --bg: #fafafa;
+  --surface: #ffffff;
+  --border: rgb(0 0 0 / 0.08);
+  --fg: #0a0a0f;
+  --muted: #5b5b6b;
+  --accent: #7c3aed;
+  --accent-2: #0891b2;
+  --glow: rgb(124 58 237 / 0.10);
+  --grid: rgb(0 0 0 / 0.04);
+  color-scheme: light;
+}
+
+.dark {
+  --bg: #0a0a0f;
+  --surface: #12121a;
+  --border: rgb(255 255 255 / 0.08);
+  --fg: #ededf2;
+  --muted: #9090a4;
+  --accent: #a78bfa;
+  --accent-2: #22d3ee;
+  --glow: rgb(139 92 246 / 0.15);
+  --grid: rgb(255 255 255 / 0.035);
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  @apply bg-bg text-fg font-sans antialiased;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+::selection {
+  background: var(--accent);
+  color: white;
+}
+
+.text-gradient {
+  background: linear-gradient(110deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.bg-grid {
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
+}
+
+/* Card that lights up under the cursor (uses --mx/--my set from JS) */
+.spotlight-card {
+  position: relative;
+  isolation: isolate;
+}
+.spotlight-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s;
+  background: radial-gradient(400px circle at var(--mx, 50%) var(--my, 50%), var(--glow), transparent 60%);
+}
+.spotlight-card:hover::before {
+  opacity: 1;
+}
+
+.cursor-blink {
+  animation: blink 1s steps(1) infinite;
+}
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Printing the page produces a clean, ink-friendly CV */
+@media print {
+  :root, .dark {
+    --bg: #fff; --surface: #fff; --fg: #000; --muted: #444; --border: #ddd;
+    --accent: #000; --accent-2: #000;
+  }
+  .no-print { display: none !important; }
+  .text-gradient { color: #000; background: none; }
+  section { break-inside: avoid; padding-top: 1rem !important; padding-bottom: 1rem !important; }
+  a { text-decoration: none; }
+  * { box-shadow: none !important; opacity: 1 !important; transform: none !important; backdrop-filter: none !important; }
+}
