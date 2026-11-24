@@ -49,8 +49,8 @@ function Portrait() {
         <img
           src={profile.photo}
           alt={`Portrait of ${profile.name}`}
-          width={480}
-          height={480}
+          width={640}
+          height={640}
           className="size-28 rounded-full border-4 border-bg object-cover sm:size-36 md:size-72"
         />
       </div>
