@@ -4,7 +4,7 @@ import { ComingSoon, Reveal, Section } from './Section'
 
 export function EducationSection() {
   return (
-    <Section id="education" eyebrow="05 · education" title="Education">
+    <Section id="education" eyebrow="06 · education" title="Education">
       {education.length === 0 && <ComingSoon />}
       <div className="space-y-4">
         {education.map((e, i) => (
@@ -17,7 +17,16 @@ export function EducationSection() {
                 </p>
                 <h3 className="mt-1 text-lg font-semibold">{e.degree}</h3>
                 <p className="text-muted">{e.institution}</p>
-                {e.notes && <p className="mt-2 text-sm text-muted">{e.notes}</p>}
+                {e.highlights && (
+                  <ul className="mt-3 space-y-1.5">
+                    {e.highlights.map((h, j) => (
+                      <li key={j} className="flex gap-3 text-sm text-muted">
+                        <span className="mt-2 size-1 shrink-0 rounded-full bg-accent" />
+                        {h}
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
             </div>
           </Reveal>

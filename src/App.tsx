@@ -6,6 +6,7 @@ import { About } from './components/About'
 import { ExperienceSection } from './components/Experience'
 import { Projects } from './components/Projects'
 import { Skills } from './components/Skills'
+import { Writing } from './components/Writing'
 import { EducationSection } from './components/Education'
 import { Contact } from './components/Contact'
 import { CommandPalette } from './components/CommandPalette'
@@ -35,6 +36,7 @@ export default function App() {
         <About />
         <ExperienceSection />
         <Projects />
+        <Writing />
         <Skills />
         <EducationSection />
         <Contact />

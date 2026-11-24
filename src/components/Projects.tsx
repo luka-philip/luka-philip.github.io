@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from 'motion/react'
 import { ArrowUpRight, FolderGit2 } from 'lucide-react'
 import { useMemo, useState } from 'react'
-import { projects } from '../data/resume'
+import { profile, projects } from '../data/resume'
 import { GithubIcon } from './Icons'
 import { Section, Tag, trackSpotlight } from './Section'
 
@@ -69,12 +69,18 @@ export function Projects() {
           ))}
         </AnimatePresence>
         {filter === 'All' && (
-          <motion.div layout className="flex min-h-48 flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-border bg-surface/30 p-6 text-center">
-            <FolderGit2 className="size-8 text-muted" strokeWidth={1.5} />
-            <p className="font-mono text-sm text-muted">
-              More projects coming soon<span className="cursor-blink text-accent">_</span>
+          <motion.a
+            layout
+            href={profile.links.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex min-h-48 flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-border bg-surface/30 p-6 text-center transition-colors hover:border-accent/50"
+          >
+            <GithubIcon className="size-8 text-muted transition-colors group-hover:text-fg" />
+            <p className="inline-flex items-center gap-1 font-mono text-sm text-muted transition-colors group-hover:text-fg">
+              More on GitHub <ArrowUpRight className="size-4" />
             </p>
-          </motion.div>
+          </motion.a>
         )}
       </motion.div>
     </Section>

@@ -36,11 +36,35 @@ const fadeUp = (delay: number) => ({
   transition: { duration: 0.6, delay, ease: [0.21, 0.47, 0.32, 0.98] as const },
 })
 
+function Portrait() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.8, delay: 0.2, ease: [0.21, 0.47, 0.32, 0.98] }}
+      className="relative order-1 w-fit md:order-2"
+    >
+      <div aria-hidden="true" className="absolute -inset-3 rounded-full bg-gradient-to-tr from-accent to-accent-2 opacity-40 blur-2xl" />
+      <div className="relative rounded-full bg-gradient-to-tr from-accent to-accent-2 p-[3px]">
+        <img
+          src={profile.photo}
+          alt={`Portrait of ${profile.name}`}
+          width={480}
+          height={480}
+          className="size-28 rounded-full border-4 border-bg object-cover sm:size-36 md:size-72"
+        />
+      </div>
+    </motion.div>
+  )
+}
+
 export function Hero() {
   const typed = useTypewriter(profile.roles)
 
   return (
-    <section id="top" className="flex min-h-[100svh] flex-col justify-center pt-24 pb-16">
+    <section id="top" className="flex min-h-[100svh] items-center pt-24 pb-16">
+      <div className="grid w-full items-center gap-12 md:grid-cols-[1fr_auto]">
+      <div className="order-2 md:order-1">
       {profile.availability && (
         <motion.div {...fadeUp(0)} className="mb-6 w-fit">
           <span className="no-print inline-flex items-center gap-2 rounded-full border border-border bg-surface/60 px-3 py-1 text-xs text-muted backdrop-blur">
@@ -116,6 +140,9 @@ export function Hero() {
           ))}
         </motion.dl>
       )}
+      </div>
+      {profile.photo && <Portrait />}
+      </div>
     </section>
   )
 }

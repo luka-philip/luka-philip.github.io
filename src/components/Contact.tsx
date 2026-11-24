@@ -9,11 +9,11 @@ export function Contact() {
 
   return (
     <>
-      <Section id="contact" eyebrow="06 · contact" title="Let's work together">
+      <Section id="contact" eyebrow="07 · contact" title="Let's work together">
         <div className="relative overflow-hidden rounded-3xl border border-border bg-surface/60 p-8 backdrop-blur sm:p-12">
           <div aria-hidden="true" className="absolute -top-24 -right-24 size-72 rounded-full bg-accent/20 blur-3xl" />
           <p className="relative max-w-xl text-lg text-muted">
-            I'm always happy to chat about new roles, interesting problems or side projects. The best way to reach me is below.
+            I'm always happy to chat about engineering, AI tooling, or products where clever ideas meet real-world impact. The best way to reach me is on LinkedIn.
           </p>
           <div className="relative mt-8 flex flex-wrap gap-3">
             {profile.email && (

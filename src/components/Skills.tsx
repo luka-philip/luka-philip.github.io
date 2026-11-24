@@ -15,7 +15,7 @@ export function Skills() {
     : []
 
   return (
-    <Section id="skills" eyebrow="04 · skills" title="My toolkit">
+    <Section id="skills" eyebrow="05 · skills" title="My toolkit">
       {Object.keys(skills).length === 0 && <ComingSoon />}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {Object.entries(skills).map(([group, items], i) => (
