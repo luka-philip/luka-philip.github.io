@@ -67,9 +67,6 @@ export function Projects() {
                   </span>
                 )}
               </h3>
-              {(p.context || p.dates) && (
-                <p className="mt-1 font-mono text-xs text-muted">{[p.context, p.dates].filter(Boolean).join(' · ')}</p>
-              )}
               <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">
                 <RichText>{p.description}</RichText>
               </p>

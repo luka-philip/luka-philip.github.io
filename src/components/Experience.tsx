@@ -83,6 +83,21 @@ export function ExperienceSection() {
                       transition={{ duration: 0.3 }}
                       className="overflow-hidden"
                     >
+                      {job.engagements && job.engagements.length > 0 && (
+                        <ul className="mt-4 space-y-3">
+                          {job.engagements.map((e) => (
+                            <li key={e.client} className="rounded-xl border border-border bg-surface/50 px-4 py-3">
+                              <p className="flex flex-wrap items-baseline justify-between gap-x-3">
+                                <span className="font-semibold text-fg">{e.client}</span>
+                                <span className="font-mono text-xs text-muted">{e.dates}</span>
+                              </p>
+                              <p className="mt-1 text-sm text-muted">
+                                <RichText>{e.description}</RichText>
+                              </p>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
                       <ul className="mt-4 space-y-2">
                         {job.highlights.map((h, j) => (
                           <li key={j} className="flex gap-3 text-muted">

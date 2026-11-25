@@ -93,7 +93,6 @@ const RoleRow = ({ title, dates }: { title: string; dates?: string }) => (
 )
 
 const stripProtocol = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '')
-const lastYear = (d?: string) => Number(d?.match(/(\d{4})(?!.*\d{4})/)?.[1] ?? 0)
 
 const Job = ({ job }: { job: Experience }) => (
   <View>
@@ -112,27 +111,17 @@ const Job = ({ job }: { job: Experience }) => (
         ).
       </Bullet>
     ))}
+    {job.engagements?.map((e) => (
+      <Bullet key={e.client}>
+        <Text style={s.bold}>
+          {e.client} ({e.dates})
+        </Text>{' '}
+        <Rich>{e.description}</Rich>
+      </Bullet>
+    ))}
     {job.highlights.map((h) => (
       <Bullet key={h}>
         <Rich>{h}</Rich>
-      </Bullet>
-    ))}
-  </View>
-)
-
-// Code for Good work, most recent first, shown as a single experience entry
-const volunteerProjects = projects.filter((p) => p.organisation).sort((a, b) => lastYear(b.dates) - lastYear(a.dates))
-
-const Volunteering = () => (
-  <View>
-    <RoleRow title={`${cv.volunteerRole.role}, ${cv.volunteerRole.company}`} />
-    {volunteerProjects.map((p) => (
-      <Bullet key={p.name}>
-        <Text style={s.bold}>
-          {p.organisation}
-          {p.dates && ` (${p.dates})`}
-        </Text>{' '}
-        <Rich>{p.description}</Rich>
       </Bullet>
     ))}
   </View>
@@ -168,12 +157,11 @@ const CV = () => (
 
       <Heading>Experience</Heading>
       {experience.map((job) => (
-        <View key={job.company + job.start}>
-          <Job job={job} />
-          {job.company === cv.volunteerRole.insertAfter && volunteerProjects.length > 0 && <Volunteering />}
-        </View>
+        <Job key={job.company + job.start} job={job} />
       ))}
 
+      {/* Keep Education in one piece so no bullet is stranded on the next page */}
+      <View wrap={false}>
       <Heading>Education</Heading>
       {education.map((e) => (
         <View key={e.institution}>
@@ -185,6 +173,8 @@ const CV = () => (
           ))}
         </View>
       ))}
+
+      </View>
 
       <Heading>Technical Skills</Heading>
       {Object.entries(cv.skills).map(([group, items]) => (

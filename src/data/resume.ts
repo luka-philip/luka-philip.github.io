@@ -17,6 +17,8 @@ export type Experience = {
   highlights: string[]
   tech: string[]
   recognition?: { title: string; source: string; url: string }[]
+  /** Client engagements within a consultancy role, shown as nested items. */
+  engagements?: { client: string; dates: string; description: string }[]
 }
 
 export type Project = {
@@ -26,9 +28,6 @@ export type Project = {
   category: string
   repo?: string
   live?: string
-  context?: string // e.g. 'Volunteer consultant developer · Code for Good'
-  organisation?: string // short name used in the CV
-  dates?: string
   status?: 'In progress' // shown as a badge on the site and noted in the CV
 }
 
@@ -80,8 +79,6 @@ export const cv = {
   headline: 'Software Engineer · J.P. Morgan Asset Management · MMath Mathematics',
   summary:
     '**Full-Stack Software Engineer** at J.P. Morgan Asset Management with **3+ years** of experience, working on an award-winning portfolio-optimisation platform and the AI tooling that accelerates it. **1 of 9 national recipients of the J.P. Morgan Winning Women in Technology Scholarship**.',
-  // Code for Good volunteer work is listed as one experience entry, built from the 'Tech for Good' projects below
-  volunteerRole: { role: 'Voluntary Consultant Salesforce Developer', company: 'Code for Good', insertAfter: 'Runna' },
   skills: {
     Languages: 'Python (NumPy, SciPy, Pandas, PyTorch, TensorFlow), TypeScript/React, Dart/Flutter, R, Scala (Cats), Haskell',
     'Quantitative & ML': 'probability, statistics, linear algebra, optimisation; Bayesian-network structure learning; Kaggle competitions',
@@ -141,6 +138,29 @@ export const experience: Experience[] = [
       'Designed and prototyped a **React Native localisation solution** for multi-language support, evaluating candidate libraries against performance and stack constraints.',
     ],
     tech: ['React Native', 'TypeScript', 'Mixpanel', 'Iterable', 'Maestro'],
+  },
+  {
+    company: 'Code for Good',
+    role: 'Voluntary Consultant Salesforce Developer',
+    start: '2021',
+    end: '2025',
+    summary: 'Pro-bono consultancy for non-profits, scoping and delivering Salesforce solutions alongside a volunteer engineering team.',
+    highlights: [],
+    engagements: [
+      {
+        client: 'Career Ready',
+        dates: 'Mar – Oct 2025',
+        description:
+          'Built **automation workflows** to process student data for a social-mobility charity, identifying data-quality issues and improving stakeholder reporting accuracy.',
+      },
+      {
+        client: 'Bloomsbury Football',
+        dates: 'Nov 2021 – Jun 2022',
+        description:
+          'Architected and implemented a **Salesforce CRM** for a growing children’s football non-profit, designed for scalability and long-term use.',
+      },
+    ],
+    tech: ['Salesforce'],
   },
   {
     company: 'J.P. Morgan',
@@ -218,26 +238,6 @@ export const projects: Project[] = [
     tech: ['React', 'TypeScript', 'Tailwind CSS', 'Vite'],
     category: 'Personal',
     repo: 'https://github.com/luka-philip/luka-philip.github.io',
-  },
-  {
-    name: 'Bloomsbury Football CRM',
-    description:
-      'Architected and implemented a **Salesforce CRM** for a growing children’s football non-profit, designed for scalability and long-term use.',
-    tech: ['Salesforce'],
-    category: 'Tech for Good',
-    context: 'Volunteer consultant developer · Code for Good',
-    organisation: 'Bloomsbury Football',
-    dates: 'Nov 2021 – Jun 2022',
-  },
-  {
-    name: 'Career Ready Automation',
-    description:
-      'Built **automation workflows** to process student data for a social-mobility charity, identifying data-quality issues and improving stakeholder reporting accuracy.',
-    tech: ['Salesforce'],
-    category: 'Tech for Good',
-    context: 'Volunteer consultant developer · Code for Good',
-    organisation: 'Career Ready',
-    dates: 'Mar – Oct 2025',
   },
 ]
 
