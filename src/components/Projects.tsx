@@ -3,6 +3,7 @@ import { ArrowUpRight, FolderGit2 } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { profile, projects } from '../data/resume'
 import { GithubIcon } from './Icons'
+import { RichText } from './RichText'
 import { Section, Tag, trackSpotlight } from './Section'
 
 export function Projects() {
@@ -58,8 +59,20 @@ export function Projects() {
                   )}
                 </div>
               </div>
-              <h3 className="mt-5 text-lg font-semibold transition-colors group-hover:text-accent">{p.name}</h3>
-              <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">{p.description}</p>
+              <h3 className="mt-5 flex flex-wrap items-center gap-2 text-lg font-semibold">
+                <span className="transition-colors group-hover:text-accent">{p.name}</span>
+                {p.status && (
+                  <span className="rounded-full border border-amber-400/40 bg-amber-400/10 px-2 py-0.5 font-mono text-[10px] font-medium tracking-wide text-amber-500 uppercase">
+                    {p.status}
+                  </span>
+                )}
+              </h3>
+              {(p.context || p.dates) && (
+                <p className="mt-1 font-mono text-xs text-muted">{[p.context, p.dates].filter(Boolean).join(' · ')}</p>
+              )}
+              <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">
+                <RichText>{p.description}</RichText>
+              </p>
               <div className="mt-5 flex flex-wrap gap-2">
                 {p.tech.map((t) => (
                   <Tag key={t}>{t}</Tag>

@@ -16,3 +16,6 @@ Thumbs.db
 npm-debug.log*
 *.tsbuildinfo
 tmp
+
+# Generated at build time from src/data/resume.ts
+public/Luka_Philip_CV.pdf

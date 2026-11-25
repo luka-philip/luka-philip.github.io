@@ -4,6 +4,7 @@
 //  wouldn't print on a CV (no phone number, home address, keys, etc.).
 //  Keep employer work descriptions free of client, mandate or internal figures.
 //  Empty fields/arrays are hidden or shown as "Coming soon" on the site.
+//  Wrap key phrases in **double asterisks** to bold them on the site and in the CV.
 // ─────────────────────────────────────────────────────────────────────────────
 
 export type Experience = {
@@ -15,6 +16,7 @@ export type Experience = {
   summary: string
   highlights: string[]
   tech: string[]
+  recognition?: { title: string; source: string; url: string }[]
 }
 
 export type Project = {
@@ -24,6 +26,10 @@ export type Project = {
   category: string
   repo?: string
   live?: string
+  context?: string // e.g. 'Volunteer consultant developer · Code for Good'
+  organisation?: string // short name used in the CV
+  dates?: string
+  status?: 'In progress' // shown as a badge on the site and noted in the CV
 }
 
 export type Article = {
@@ -60,13 +66,34 @@ export const profile = {
   photo: '/profile.webp', // set to '' to hide
   // Set to an address you're happy to be public, or leave empty to hide the email button.
   email: '',
-  // Add a PDF at public/resume.pdf and set this to '/resume.pdf' to show the download buttons.
-  resumeUrl: '',
+  // Generated from this file at build time by scripts/build-cv.tsx (no phone/email; points to LinkedIn).
+  resumeUrl: '/Luka_Philip_CV.pdf',
   links: {
     github: 'https://github.com/luka-philip',
     linkedin: 'https://www.linkedin.com/in/luka-philip',
   },
   availability: '', // e.g. 'Open to new opportunities'
+}
+
+// ── CV-only content (scripts/build-cv.tsx) ──────────────────────────────────
+export const cv = {
+  headline: 'Software Engineer · J.P. Morgan Asset Management · MMath Mathematics',
+  summary:
+    '**Full-Stack Software Engineer** at J.P. Morgan Asset Management with **3+ years** of experience, working on an award-winning portfolio-optimisation platform and the AI tooling that accelerates it. **1 of 9 national recipients of the J.P. Morgan Winning Women in Technology Scholarship**.',
+  // Code for Good volunteer work is listed as one experience entry, built from the 'Tech for Good' projects below
+  volunteerRole: { role: 'Voluntary Consultant Salesforce Developer', company: 'Code for Good', insertAfter: 'Runna' },
+  skills: {
+    Languages: 'Python (NumPy, SciPy, Pandas, PyTorch, TensorFlow), TypeScript/React, Dart/Flutter, R, Scala (Cats), Haskell',
+    'Quantitative & ML': 'probability, statistics, linear algebra, optimisation; Bayesian-network structure learning; Kaggle competitions',
+    'AI tooling': 'MCP servers (co-built and deployed for team use), Roo Code, Claude, Copilot, Windsurf; OpenAI SDK',
+    Engineering:
+      'AWS (OpenSearch, Serverless), Grafana, Tableau, Jenkins, Git, Bitbucket, Jira, Figma; REST / GraphQL / WebSockets; TDD (Jest, RTL, Vite); RFCs; Terraform; Docker',
+  } as Record<string, string>,
+  other: [
+    'Volunteer panel speaker for **Generation Tech** events, sharing career advice and encouraging students aged 14–17 to explore pathways into technology.',
+    'Strong interest in health and fitness: I keep active through bouldering and running regularly.',
+    'Learning Italian and Spanish.',
+  ],
 }
 
 export const stats: { value: string; label: string }[] = [
@@ -85,15 +112,22 @@ export const experience: Experience[] = [
     summary:
       'Small team building a greenfield portfolio-optimisation platform. I own features end to end, from scoping with quantitative analysts through to production. Promoted from Software Engineer to Associate in Feb 2026.',
     highlights: [
-      'Deliver core optimisation features for the platform, partnering closely with key users to scope and prioritise new capabilities.',
-      'Co-built AI developer tooling, including an MCP server and custom GitHub Copilot and Roo Code skills for project management, code generation, testing and reviews. Used them to finish large migrations in a fraction of the expected time.',
-      "Automated the team's market-data ingestion pipeline, turning a multi-step manual weekly process into a fully automated workflow that has run reliably since.",
-      'Moved the search layer to AWS OpenSearch, added caching for long-running analytics requests, and introduced Grafana observability so incidents are detected in seconds rather than minutes.',
-      "Helping build an AI-powered assistant for the platform's users.",
-      'Mentor early-career engineers and co-founded an internal developer community that publishes a bi-monthly technology research newsletter.',
-      "Selected to present research on AI's impact on early-career engineers to J.P. Morgan's Global Technology Leadership.",
+      'Deliver **core optimisation features** for the platform, partnering closely with key users to scope and prioritise new capabilities.',
+      'Co-built **AI developer tooling**, including an **MCP server** and custom GitHub Copilot and Roo Code skills for project management, code generation, testing and reviews. Used them to finish large migrations in a fraction of the expected time.',
+      "Automated the team's market-data ingestion pipeline, turning a multi-step manual weekly process into a **fully automated workflow** that has run reliably since.",
+      'Moved the search layer to AWS OpenSearch, added caching for long-running analytics requests, and introduced Grafana observability so incidents are detected in **seconds rather than minutes**.',
+      "Helping build an **AI-powered assistant** for the platform's users.",
+      '**Mentor** early-career engineers and **co-founded an internal developer community** that publishes a bi-monthly technology research newsletter.',
+      "Advocate for AI acceleration and early-career technologists through panels, presentations and technical writing. **Selected from hundreds** of Associate SWEs to present research on AI's impact on early-career engineers to **Global Technology Leadership**, and authored a J.P. Morgan Tech Blog post shared by **three company CIOs, including the Global CIO**.",
     ],
     tech: ['Python', 'React', 'TypeScript', 'AWS', 'OpenSearch', 'Grafana', 'MCP'],
+    recognition: [
+      {
+        title: "Part of the team behind J.P. Morgan Asset Management's Spectrum platform, winner of Best Digital / AI Innovation in Insurance Investing",
+        source: 'AsianInvestor Insurance Awards 2027',
+        url: 'https://www.asianinvestor.net/article/insurance-awards-2027-asias-top-client-service-delivery-service-provider-cat/508712',
+      },
+    ],
   },
   {
     company: 'Runna',
@@ -103,8 +137,8 @@ export const experience: Experience[] = [
     location: 'London',
     summary: 'Growth and Core App teams at a fast-growing consumer fitness startup.',
     highlights: [
-      'Built feature-flagged experimentation flows with Mixpanel and Iterable for controlled rollouts and A/B testing, then analysed engagement and retention and presented the findings to the team.',
-      'Designed and prototyped a React Native localisation solution for multi-language support, evaluating candidate libraries against performance and stack constraints.',
+      'Built **feature-flagged experimentation flows** with Mixpanel and Iterable for controlled rollouts and A/B testing, then analysed engagement and retention and presented the findings to the team.',
+      'Designed and prototyped a **React Native localisation solution** for multi-language support, evaluating candidate libraries against performance and stack constraints.',
     ],
     tech: ['React Native', 'TypeScript', 'Mixpanel', 'Iterable', 'Maestro'],
   },
@@ -116,7 +150,7 @@ export const experience: Experience[] = [
     location: 'London',
     summary: 'Summer internship on a front-end team in Markets technology.',
     highlights: [
-      'Built a React component library to standardise UI development across the team, including advanced data-grid features with AG Grid.',
+      'Built a **React component library** to standardise UI development across the team, including advanced data-grid features with AG Grid.',
       'Presented the finished work to quantitative research and technology stakeholders.',
     ],
     tech: ['React', 'TypeScript', 'AG Grid', 'Jest'],
@@ -130,9 +164,9 @@ export const experience: Experience[] = [
     summary: '14-month placement as part of my Year in Industry.',
     highlights: [
       "Extended the team's web application with new data-visualisation features.",
-      'Built a metrics service that captures user interactions into a data lake, surfaced through Tableau reporting.',
-      'Wrote functional Scala with Cats, extended APIs, supported release cycles and led monthly team retrospectives.',
-      '1st place in the J.P. Morgan Annual Technology Hackathon 2022.',
+      'Built a **metrics service** that captures user interactions into a data lake, surfaced through Tableau reporting.',
+      'Wrote **functional Scala** with Cats, extended APIs, supported release cycles and led monthly team retrospectives.',
+      '**1st place, J.P. Morgan Annual Technology Hackathon 2022.**',
     ],
     tech: ['Scala', 'Tableau', 'Jenkins'],
   },
@@ -140,12 +174,34 @@ export const experience: Experience[] = [
 
 export const projects: Project[] = [
   {
+    name: 'LanGo',
+    description:
+      'An Android app for learning Italian, with practice sentences built from themed vocabulary, **spaced repetition**, a 12-week plan and a **hands-free audio mode**. It **listens to spoken Italian and grades** whether you said it correctly, and everything runs on the phone, offline.',
+    tech: ['Flutter', 'Dart', 'SQLite', 'ML Kit'],
+    category: 'Personal',
+  },
+  {
+    name: 'Run Route Generator',
+    description:
+      'Turns plain-English requests into running loops. It builds an OpenStreetMap graph, searches with A*, and **ranks loops on distance, overlap, scenery, main roads and elevation**, running in a Web Worker with GPX export. A dedicated **MCP server** is coming soon.',
+    tech: ['React', 'TypeScript', 'Leaflet', 'OpenStreetMap'],
+    category: 'Personal',
+  },
+  {
     name: 'Taskbar Farm',
     description:
       "A tiny farmer who lives on your Windows taskbar. He wanders, flees your cursor, and plants crops that grow in real time. It's a click-through Electron overlay locked down with a sandboxed renderer, a strict CSP, zero network access and minimal validated IPC.",
     tech: ['TypeScript', 'Electron'],
     category: 'Personal',
     repo: 'https://github.com/luka-philip/taskbar-farm',
+  },
+  {
+    name: 'Beta Cracker',
+    description:
+      'A browser app to work out how to climb a bouldering problem: photograph the wall, tap the holds (segmented on-device with **SlimSAM**), enter your height, and a shortest-path search over limb positions returns a **move sequence tailored to your body**. Photos never leave the phone.',
+    tech: ['React', 'TypeScript', 'Transformers.js'],
+    category: 'Personal',
+    status: 'In progress',
   },
   {
     name: 'Options Pricer',
@@ -166,16 +222,22 @@ export const projects: Project[] = [
   {
     name: 'Bloomsbury Football CRM',
     description:
-      'Volunteer consultant developer (Code for Good). Architected and implemented a Salesforce CRM for a growing children’s football non-profit, designed to scale and stay maintainable long term.',
+      'Architected and implemented a **Salesforce CRM** for a growing children’s football non-profit, designed for scalability and long-term use.',
     tech: ['Salesforce'],
     category: 'Tech for Good',
+    context: 'Volunteer consultant developer · Code for Good',
+    organisation: 'Bloomsbury Football',
+    dates: 'Nov 2021 – Jun 2022',
   },
   {
     name: 'Career Ready Automation',
     description:
-      'Volunteer consultant developer (Code for Good). Built Salesforce automation workflows to process student data for a social-mobility charity, surfacing data-quality issues and improving the accuracy of stakeholder reporting.',
+      'Built **automation workflows** to process student data for a social-mobility charity, identifying data-quality issues and improving stakeholder reporting accuracy.',
     tech: ['Salesforce'],
     category: 'Tech for Good',
+    context: 'Volunteer consultant developer · Code for Good',
+    organisation: 'Career Ready',
+    dates: 'Mar – Oct 2025',
   },
 ]
 
@@ -192,8 +254,8 @@ export const writing: Article[] = [
 ]
 
 export const skills: Record<string, string[]> = {
-  Languages: ['Python', 'TypeScript', 'Scala', 'R', 'Haskell'],
-  'Frontend & Mobile': ['React', 'React Native', 'AG Grid', 'Tailwind CSS', 'Electron'],
+  Languages: ['Python', 'TypeScript', 'Dart', 'Scala', 'R', 'Haskell'],
+  'Frontend & Mobile': ['React', 'React Native', 'Flutter', 'AG Grid', 'Tailwind CSS', 'Electron', 'Leaflet'],
   'Data & ML': ['NumPy', 'Pandas', 'SciPy', 'PyTorch', 'TensorFlow', 'Bayesian networks', 'Tableau'],
   'AI Tooling': ['MCP', 'Claude', 'GitHub Copilot', 'Roo Code', 'Windsurf', 'OpenAI SDK'],
   'Cloud & DevOps': ['AWS', 'OpenSearch', 'Grafana', 'Docker', 'Terraform', 'Jenkins', 'Git'],
@@ -204,12 +266,12 @@ export const education: Education[] = [
   {
     institution: 'University of Bath',
     degree: 'MMath Mathematics with Year in Industry (2:1)',
-    start: '2019',
-    end: '2024',
+    start: 'Sep 2019',
+    end: 'Jun 2024',
     highlights: [
-      'First-class dissertation: an empirical evaluation of structure-learning algorithms for Bayesian networks in R, using a five-metric framework across reference networks of 4–223 nodes and datasets of up to ~1M observations.',
-      'Modules: Machine Learning, Bayesian Statistics, Multivariate Data Analysis, Scientific Computing, Functional Programming.',
-      'One of 9 national recipients of the J.P. Morgan Winning Women in Technology Scholarship.',
+      '**First-class dissertation:** an empirical evaluation of structure-learning algorithms for Bayesian networks in R, using a five-metric framework across reference networks of 4–223 nodes and datasets of up to ~1M observations.',
+      '**Modules:** Machine Learning, Bayesian Statistics, Multivariate Data Analysis, Scientific Computing, Functional Programming.',
+      '**One of 9 national recipients** of the J.P. Morgan Winning Women in Technology Scholarship.',
     ],
   },
 ]

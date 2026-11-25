@@ -1,5 +1,6 @@
 import { GraduationCap } from 'lucide-react'
 import { education } from '../data/resume'
+import { RichText } from './RichText'
 import { ComingSoon, Reveal, Section } from './Section'
 
 export function EducationSection() {
@@ -22,7 +23,9 @@ export function EducationSection() {
                     {e.highlights.map((h, j) => (
                       <li key={j} className="flex gap-3 text-sm text-muted">
                         <span className="mt-2 size-1 shrink-0 rounded-full bg-accent" />
-                        {h}
+                        <span>
+                          <RichText>{h}</RichText>
+                        </span>
                       </li>
                     ))}
                   </ul>

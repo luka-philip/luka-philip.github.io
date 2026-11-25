@@ -15,8 +15,15 @@ Built with React 19, TypeScript, Vite, Tailwind CSS v4 and Motion.
 
 ## Editing content
 
-All content lives in **[`src/data/resume.ts`](src/data/resume.ts)**. Replace each `TODO` there.
-To offer a downloadable CV, put a PDF at `public/resume.pdf`.
+All content lives in **[`src/data/resume.ts`](src/data/resume.ts)**. The website and the downloadable CV are both generated from it.
+
+## Downloadable CV
+
+`npm run build` generates `public/Luka_Philip_CV.pdf` from `resume.ts` (via `scripts/build-cv.tsx`), so the PDF always matches the site. It's gitignored because it's rebuilt on every deploy.
+
+- It never includes a phone number or email. Recruiters are asked to get in touch via LinkedIn.
+- The build **fails** if an email address or phone number is ever added to `resume.ts`.
+- Run `npm run cv` to regenerate it on its own (`npm run dev` does this automatically).
 
 ## Development
 

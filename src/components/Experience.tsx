@@ -1,7 +1,8 @@
 import { AnimatePresence, motion } from 'motion/react'
-import { ChevronDown } from 'lucide-react'
+import { ArrowUpRight, ChevronDown, Trophy } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { experience } from '../data/resume'
+import { RichText } from './RichText'
 import { ComingSoon, Reveal, Section, Tag } from './Section'
 
 export function ExperienceSection() {
@@ -54,6 +55,25 @@ export function ExperienceSection() {
                   />
                 </button>
 
+                {job.recognition?.map((r) => (
+                  <a
+                    key={r.url}
+                    href={r.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group mt-3 flex w-fit items-start gap-2.5 rounded-xl border border-amber-400/30 bg-amber-400/10 px-3.5 py-2 text-sm transition-colors hover:border-amber-400/60"
+                  >
+                    <Trophy className="mt-0.5 size-4 shrink-0 text-amber-500" />
+                    <span>
+                      <span className="text-fg">{r.title}</span>
+                      <span className="ml-1.5 inline-flex items-center gap-0.5 text-muted transition-colors group-hover:text-fg">
+                        · {r.source}
+                        <ArrowUpRight className="no-print size-3.5" />
+                      </span>
+                    </span>
+                  </a>
+                ))}
+
                 <AnimatePresence initial={false}>
                   {isOpen && (
                     <motion.div
@@ -67,7 +87,9 @@ export function ExperienceSection() {
                         {job.highlights.map((h, j) => (
                           <li key={j} className="flex gap-3 text-muted">
                             <span className="mt-2.5 size-1 shrink-0 rounded-full bg-accent" />
-                            {h}
+                            <span>
+                              <RichText>{h}</RichText>
+                            </span>
                           </li>
                         ))}
                       </ul>
